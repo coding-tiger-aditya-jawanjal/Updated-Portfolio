@@ -20,6 +20,7 @@ const Home = () => {
         zIndex={"-1"}
       >
         
+        
         <Center
           p={"10"}
           m={"2"}
@@ -28,11 +29,15 @@ const Home = () => {
           fontStyle={"italic"}
           textDecor={"underline"}
           position={"absolute"}
-          left={{ base: "20vw", md: "60vw" }}
+          left={{ base: "15vw", md: "50vw" }}
           top={"20vh"}
+          h={"auto"}
+          mb={"20"}
         >
-          Aditya Jawanjal
+          Aditya Jawanjal 
+          
         </Center>
+       
         <Stack mb={"300px"}>
           <About />
           <Skills />

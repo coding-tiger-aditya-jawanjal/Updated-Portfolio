@@ -43,7 +43,15 @@ const Projects = () => {
           </Center>
         </HStack>
         <Center w={"full"} pt={"10"}>
-          <HStack gap={8} wrap={"wrap"} justifyContent={"center"} mb={"150px"}>
+          <HStack
+            gap={8}
+            wrap={"wrap"}
+            maxW={"95%"}
+            alignItems={"center"}
+            mb={"150px"}
+            ml={"3"}
+            mr={"3"}
+          >
             {list.map((e) => {
               return (
                 <>
@@ -62,21 +70,37 @@ const Projects = () => {
                         W={{ md: "96", lg: "full" }}
                         h={"72"}
                       />
-                      <HStack w={"full"} gap={5} justifyContent={"center"}>
-                        <Button
-                          type={"button"}
-                          size={"lg"}
-                          bgColor={"whatsapp.300"}
+                      <HStack w={"full"} gap={5} justifyContent={"space-evenly"}>
+                        <a
+                          href="http://google.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        
                         >
-                          Show Description{" "}
-                        </Button>
-                        <Button
-                          type={"button"}
-                          size={"lg"}
-                          bgColor={"whatsapp.300"}
+                          <Button
+                            type={"button"}
+                            size={"lg"}
+                            bgColor={"whatsapp.300"}
+                            w={"40"}
+                          >
+                            Github{" "}
+                          </Button>
+                        </a>
+                        <a
+                          href="http://google.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          
                         >
-                          Show Live{" "}
-                        </Button>
+                          <Button
+                            type={"button"}
+                            size={"lg"}
+                            w={"40"}
+                            bgColor={"whatsapp.300"}
+                          >
+                            Live{" "}
+                          </Button>
+                        </a>
                       </HStack>
                     </VStack>
                   </Box>

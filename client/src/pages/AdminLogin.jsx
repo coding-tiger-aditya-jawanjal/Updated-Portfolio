@@ -10,7 +10,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
-const Admin = () => {
+const AdminLogin = () => {
   return (
     <>
       <Center>
@@ -53,4 +53,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminLogin;

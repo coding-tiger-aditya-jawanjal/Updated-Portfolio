@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Stack } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Projects from "./components/Projects";
-import Admin from "./components/Admin";
-import AdminPanel from "./components/AdminPanel";
+import Projects from "./pages/Projects";
+import AdminPanel from "./pages/AdminPanel";
+import AdminLogin from "./pages/AdminLogin";
 
 const App = () => {
   return (
@@ -17,7 +17,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects/> } />
-            <Route path="/admin" element={<Admin/> } />
+            <Route path="/admin" element={<AdminLogin/> } />
             <Route path="/control" element={<AdminPanel/> } />
           </Routes>
           <Box position={"absolute"} bottom={"0.5"} w={"full"}>
