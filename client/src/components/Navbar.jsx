@@ -58,6 +58,7 @@ const Navbar = () => {
                 Contact
               </HashLink>
               <Link to={"/projects"}>Projects</Link>
+              <Link to={"/control"}>Control</Link>
               <Link to={"/admin"}>
                 <Avatar
                   size={"lg"}

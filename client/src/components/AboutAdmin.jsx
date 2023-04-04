@@ -16,6 +16,8 @@ const AboutAdmin = () => {
   const [aboutDescription, setAboutDriscription] = useState();
   const [resume, setResume] = useState();
 
+  const updateAbout = () =>{}
+
   return (
     <>
       <Center>
@@ -33,21 +35,36 @@ const AboutAdmin = () => {
             </Heading>
             <FormControl>
               <FormLabel>Title : </FormLabel>
-              <Input type={"text"} placeholder={"Enter the Title"} />
+              <Input
+                type={"text"}
+                placeholder={"Enter the Title"}
+                onChange={(e) => setTitle(e.target.value)}
+                value={title ? title : ""}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Description : </FormLabel>
-              <Textarea placeholder={"Enter about Yourself"} rows={10} />
+              <Textarea
+                placeholder={"Enter about Yourself"}
+                rows={10}
+                onChange={(e) => setAboutDriscription(e.target.value)}
+                value={aboutDescription ? aboutDescription : ""}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Resume : </FormLabel>
-              <Input type={"file"} p={"1"} />
+              <Input
+                type={"file"}
+                p={"1"}
+                onChange={(e) => setResume(e.target.files[0])}
+              />
             </FormControl>
             <Button
               w={"full"}
               bgColor={"whatsapp.100"}
               type={"submit"}
               fontSize={"larger"}
+              onClick={updateAbout}
             >
               Update
             </Button>
