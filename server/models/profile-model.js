@@ -8,6 +8,9 @@ const profileSchema = new mongoose.Schema(
     password: {
       type: String,
     },
+    profilePic:{
+      type:String
+    },
     about: {
       title: {
         type: String,

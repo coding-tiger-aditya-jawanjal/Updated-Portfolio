@@ -1,12 +1,19 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-const auth = async (req,res,next) =>{
+exports.auth = (req, res, next) => {
     try {
-        const token = req.headers["Authorization"];
-        const decode = jwt.verify(token , process.env.JWT_SECRET);
-        console.log(decode);
+      const decoded = jwt.verify(
+        req.headers.authorization || req.headers.Authorization,
+        process.env.JWT_SECRET
+      );
+      if (decoded) {
+        req.user = decoded;
+        next();
+      } else {
+        res.status(400).json("Error in decoding token.");
+      }
     } catch (err) {
-        res.status(400).json(`The error in auth is : ${auth}`);
+      res.status(400).json(`The error in verifyToken is : ${err}`);
     }
-}
-module.exports = auth;
+  };

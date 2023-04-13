@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Heading,
-  HStack,
-  Image,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Heading, HStack, Image, Stack, Text } from "@chakra-ui/react";
 
 const Skills = () => {
   const List = [
@@ -53,8 +46,8 @@ const Skills = () => {
         <HStack
           wrap={"wrap"}
           gap={10}
-          justifyContent={{base:"center",md:"flex-start"}}
-          pl={{md:"7" , lg:"14"}}
+          justifyContent={{ base: "center", md: "flex-start" }}
+          pl={{ md: "7", lg: "14" }}
         >
           {List.map((e) => {
             return (

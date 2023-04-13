@@ -21,6 +21,13 @@ import { GiHamburgerMenu } from "react-icons/gi";
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const auth = localStorage.getItem("admin");
+
+  const logout = () =>{
+    localStorage.clear();
+    window.location.reload();
+  }
+
   return (
     <>
       <HStack
@@ -28,9 +35,10 @@ const Navbar = () => {
         h={"32"}
         w={"full"}
         p={"5"}
-        position={{ sm: "none", md: "sticky" }}
+        
         top={"0"}
         zIndex={2}
+        pos={"sticky"}
       >
         <HStack maxW={"container.xl"}>
           <Image
@@ -58,14 +66,23 @@ const Navbar = () => {
                 Contact
               </HashLink>
               <Link to={"/projects"}>Projects</Link>
-              <Link to={"/control"}>Control</Link>
-              <Link to={"/admin"}>
+              
+              {
+                auth ? 
+                <>
+                  <Link onClick={logout}>Logout</Link>
+                  <Link to={"/control"}>Control</Link>
+                </>
+                :
+                <>
+
+                </>
+              }
                 <Avatar
                   size={"lg"}
                   name="Aditya Jawanjal"
                   src="https://static-cse.canva.com/blob/975732/1600w-EW4cggXkgbc.jpg"
                 />
-              </Link>
             </HStack>
             <Box display={{ base: "flex", lg: "none" }}>
               <GiHamburgerMenu size={42} onClick={onOpen} />
@@ -78,33 +95,43 @@ const Navbar = () => {
         onClose={onClose}
         isOpen={isOpen}
         fontSize={"larger"}
+        
       >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader mb={"5"}>Visit more pages</DrawerHeader>
           <DrawerBody>
-            <Stack gap={5} ml={"5"}>
-              <Link to={"/"} onClick={onClose}>
+            <Stack gap={5} ml={"5"} onClick={onClose}>
+              <Link to={"/"} >
                 Home
               </Link>
-              <HashLink to={"/#about"} onClick={onClose}>
+              <HashLink to={"/#about"}>
                 About
               </HashLink>
-              <HashLink to={"/#skills"} onClick={onClose}>
+              <HashLink to={"/#skills"} >
                 Skills
               </HashLink>
-              <HashLink to={"/#contact"} onClick={onClose}>
+              <HashLink to={"/#contact"} >
                 Contact
               </HashLink>
-              <Link to={"/projects"} onClick={onClose}>
+              <Link to={"/projects"} >
                 Projects
               </Link>
-              <Link to={"/admin"} onClick={onClose}>
-                Profile
+              {
+                auth ? 
+                <>
+                <Link onClick={logout} >
+                Logout
               </Link>
-              <Link to={"/control"} onClick={onClose}>
+              <Link to={"/control"} >
                 Control Panel
               </Link>
+                </> 
+                :
+                <>
+
+                </>
+              }
             </Stack>
           </DrawerBody>
           <DrawerFooter>Created By : Aditya Jawanjal</DrawerFooter>

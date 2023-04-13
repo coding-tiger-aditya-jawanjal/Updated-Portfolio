@@ -18,12 +18,22 @@ import {
 } from "@chakra-ui/react";
 import {TbEdit } from "react-icons/tb";
 import {MdDelete } from "react-icons/md";
+import { addSkill } from "../service/api";
 
 const SkillsAdmin = () => {
-  const [skillLogo, setSkillLogo] = useState();
-  const [skillName, setSkillName] = useState();
-
-  const updateSkills = () =>{}
+  const [logo, setLogo] = useState();
+  const [name, setName] = useState();
+  // const [toggle, setToggle] = useState(false);
+  
+  const addNewSkill = async () =>{
+    const data = new FormData();
+    data.append("file",logo);
+    data.append("name",name);
+    const result = await addSkill(data);
+    console.log(result);
+  }
+  const editSkill = () =>{}
+  const deleteSkill = () =>{}
 
   return (
     <>
@@ -42,20 +52,20 @@ const SkillsAdmin = () => {
             </Heading>
             <FormControl>
               <FormLabel>Logo : </FormLabel>
-              <Input type={"file"} p={"1"} onChange={(e)=>setSkillLogo(e.target.files[0])} />
+              <Input type={"file"} p={"1"} onChange={(e)=>setLogo(e.target.files[0])} />
             </FormControl>
             <FormControl>
               <FormLabel>Name : </FormLabel>
-              <Input type={"text"} placeholder={"Enter the Skill Name"} onChange={(e)=>setSkillName(e.target.value)} value={skillName ? skillName : ""} />
+              <Input type={"text"} placeholder={"Enter the Skill Name"} onChange={(e)=>setName(e.target.value)} value={name ? name : ""} />
             </FormControl>
             <Button
               w={"full"}
               bgColor={"whatsapp.100"}
               type={"submit"}
               fontSize={"larger"}
-              onClick={updateSkills}
+              onClick={addNewSkill}
             >
-              Update
+              Add
             </Button>
           </VStack>
         </Container>
@@ -76,8 +86,8 @@ const SkillsAdmin = () => {
                     <Td>1.</Td>
                     <Td>React.js</Td>
                     <Td>pic</Td>
-                    <Td><TbEdit size={"24"}/> </Td>
-                    <Td><MdDelete size={"24"}/></Td>
+                    <Td><TbEdit size={"24"} onClick={editSkill}/> </Td>
+                    <Td><MdDelete size={"24"} onClick={deleteSkill}/></Td>
                 </Tr>
             </Tbody>
         </Table>
