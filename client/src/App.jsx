@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Stack } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -8,20 +8,9 @@ import Projects from "./pages/Projects";
 import AdminPanel from "./pages/AdminPanel";
 import AdminLogin from "./pages/AdminLogin";
 import Pic from "./Pic";
-import { getAllData } from "./service/api";
-import { useDispatch } from "react-redux";
-import { allData } from "./service/ProfileSlice";
 
 const App = () => {
-  const dispatch = useDispatch();
-  useEffect(()=>{
-    const fetchData = async () =>{
-     const result = await getAllData();
-      dispatch(allData(result));
-      console.log(result);
-    }
-    fetchData();
-  },[dispatch])
+  
   return (
     <>
       <BrowserRouter>

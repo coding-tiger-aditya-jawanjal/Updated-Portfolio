@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Center,
@@ -10,13 +10,27 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { updateAboutInfo } from "../service/api";
 
 const AboutAdmin = () => {
   const [title, setTitle] = useState();
   const [aboutDescription, setAboutDriscription] = useState();
   const [resume, setResume] = useState();
 
-  const updateAbout = () =>{}
+  const res = useSelector((state)=>state.profile.data);
+  useEffect(()=>{
+      setTitle(res[0].about.title);
+      setAboutDriscription(res[0].about.description);
+  },[res])
+
+  const updateAbout = async() =>{
+    const data = new FormData();
+    data.append("title",title)
+    data.append("description",aboutDescription)
+    data.append("file",resume);
+    await updateAboutInfo(data);
+  }
 
   return (
     <>

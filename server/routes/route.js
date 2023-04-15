@@ -1,25 +1,25 @@
 const express = require("express");
+const { auth } = require("../middlewares/auth");
+const { upload } = require("../middlewares/config");
+const { getProfile } = require("../controllers/get-controller");
 const {
-  updateAbout,
   loginUser,
   addSkill,
   addContact,
   addProject,
+} = require("../controllers/post-controller");
+const {
   removeProject,
   removeContact,
   removeSkills,
+} = require("../controllers/delete-controller");
+const {
+  updateAbout,
   updateSkill,
-  getProfile,
   updateContact,
   updateProject,
-  test,
-  addProfile,
-} = require("../controllers/profile-controller");
-const { auth } = require("../middlewares/auth");
-const { upload } = require("../middlewares/config");
+} = require("../controllers/put-controller");
 const router = express.Router();
-
-// router.post("/test",upload.single("file") , test );
 
 router.get("/", getProfile);
 

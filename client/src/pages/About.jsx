@@ -16,13 +16,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import { useSelector } from "react-redux";
 
 const About = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const res = useSelector((state)=>state.profile.data);
-
-
+  
   return (
     <>
       <Center>
