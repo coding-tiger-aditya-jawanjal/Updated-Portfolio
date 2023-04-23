@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Box, Stack } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -8,18 +8,29 @@ import Projects from "./pages/Projects";
 import AdminPanel from "./pages/AdminPanel";
 import AdminLogin from "./pages/AdminLogin";
 import Pic from "./Pic";
+import { getAllData } from "./service/api";
 
+const profile = createContext();
 const App = () => {
-  
+  const [data , setData ] = useState();
+  useEffect(()=>{
+    const getData = async () =>{
+      const res = await getAllData();
+      // console.log(res[0]);
+      setData(res[0]);
+    }
+    getData();
+  },[])
+
   return (
     <>
+    <profile.Provider value={{data}}>
       <BrowserRouter>
         <Stack minH={"100vh"}>
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pic" element={<Pic/>} />
-
             <Route path="/projects" element={<Projects/> } />
             <Route path="/admin" element={<AdminLogin/> } />
             <Route path="/control" element={<AdminPanel/> } />
@@ -29,8 +40,10 @@ const App = () => {
           </Box>
         </Stack>
       </BrowserRouter>
+      </profile.Provider>
     </>
   );
 };
 
 export default App;
+export {profile};

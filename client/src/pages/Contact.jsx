@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
@@ -8,37 +8,39 @@ import {
   Image,
   Stack,
 } from "@chakra-ui/react";
+import { profile } from "../App";
 
 const Contact = () => {
-  const List = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-    {
-      id: 6,
-    },
-    {
-      id: 7,
-    },
-    {
-      id: 8,
-    },
-    {
-      id: 9,
-    },
-  ];
+  const List = useContext(profile).data.contacts;
+  // const List = [
+  //   {
+  //     id: 1,
+  //   },
+  //   {
+  //     id: 2,
+  //   },
+  //   {
+  //     id: 3,
+  //   },
+  //   {
+  //     id: 4,
+  //   },
+  //   {
+  //     id: 5,
+  //   },
+  //   {
+  //     id: 6,
+  //   },
+  //   {
+  //     id: 7,
+  //   },
+  //   {
+  //     id: 8,
+  //   },
+  //   {
+  //     id: 9,
+  //   },
+  // ];
   return (
     <>
       <Box id="contact" pt={"300px"} mb={"100px"}>

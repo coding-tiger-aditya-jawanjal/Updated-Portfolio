@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Center,
@@ -20,8 +20,10 @@ import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { addProject, deleteTheProject, updateTheProject } from "../service/api";
+import { profile } from "../App";
 
 const ProjectsAdmin = () => {
+  const ProjectHook = useContext(profile).data.projects;
   const [projectName, setProjectName] = useState();
   const [githubHref, setGithubHref] = useState();
   const [projectLink, setProjectLink] = useState();
@@ -30,11 +32,9 @@ const ProjectsAdmin = () => {
   const [toggle, setToggle] = useState(false);
   const [id, setId] = useState();
 
-  const res = useSelector((state) => state.profile.data[0].projects);
-
   useEffect(() => {
-    setProjects(res);
-  }, [res]);
+    setProjects(ProjectHook);
+  }, [ProjectHook]);
 
   const addNewProject = async () => {
     const data = new FormData();

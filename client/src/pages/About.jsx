@@ -11,19 +11,22 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Stack,
   Text,
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
+import { profile } from "../App";
+
 
 const About = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  
+  const info = useContext(profile).data.about;
+
   return (
     <>
       <Center>
-        <Box id="about" mt={"600px"} mb={"100px"}>
+        <Box id="about" >
           <Center>
             <Heading
               as={"h2"}
@@ -48,33 +51,30 @@ const About = () => {
             gap={5}
           >
             <Center fontSize={"3xl"} mb={"5"} noOfLines={1}>
-              Full stack web developer
+              {info.title}
             </Center>
             <Center textAlign={"justify"} noOfLines={4}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptates sit qui dolorum deleniti, ex sunt. Dignissimos deleniti
-              quibusdam necessitatibus nam? Consequatur reprehenderit et beatae
-              fugiat dignissimos sunt adipisci dolorum vitae tenetur, fugit rem
-              cumque asperiores voluptatem quae, sapiente minus laborum iusto
-              accusamus quod. Quisquam, sunt quam molestias deserunt praesentium
-              aliquid!
+              {info.description}
             </Center>
-            <HStack
+          
+            {/* <Stack
               justifyContent={"space-between"}
               ml={"3"}
               mr={"3"}
               w={"full"}
             >
-              <Button
+              <Button>Click Me</Button> */}
+              {/* <Button
                 size={"lg"}
                 bgColor={"red.300"}
                 fontSize={"1.2rem"}
                 fontFamily={"mono"}
                 zIndex={5}
+               
               >
                 Download Resume
-              </Button>
-              <Button
+              </Button> */}
+              {/* <Button
                 type="button"
                 as={"button"}
                 bgColor={"inherit"}
@@ -85,15 +85,19 @@ const About = () => {
                 
               >
                 Read More...
-              </Button>
+              </Button> */}
              
               
-
+                
               
-            </HStack>
+            {/* </Stack> */}
+           
           </VStack>
         </Box>
-        <Modal
+        
+        
+        </Center>
+        {/* <Modal
                 blockScrollOnMount={false}
                 isOpen={isOpen}
                 onClose={onClose}
@@ -124,8 +128,8 @@ const About = () => {
                     <Button variant="ghost">Secondary Action</Button>
                   </ModalFooter>
                 </ModalContent>
-              </Modal>
-      </Center>
+              </Modal> */}
+     
       {/* Modal of Read More */}
       {/* <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

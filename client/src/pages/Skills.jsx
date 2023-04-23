@@ -1,39 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Heading, HStack, Image, Stack, Text } from "@chakra-ui/react";
+import { profile } from "../App";
 
 const Skills = () => {
-  const List = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-    {
-      id: 6,
-    },
-    {
-      id: 7,
-    },
-    {
-      id: 8,
-    },
-    {
-      id: 9,
-    },
-  ];
+  const List = useContext(profile).data.skills;
+  // const List = [
+  //   {
+  //     id: 1,
+  //   },
+  //   {
+  //     id: 2,
+  //   },
+  //   {
+  //     id: 3,
+  //   },
+  //   {
+  //     id: 4,
+  //   },
+  //   {
+  //     id: 5,
+  //   },
+  //   {
+  //     id: 6,
+  //   },
+  //   {
+  //     id: 7,
+  //   },
+  //   {
+  //     id: 8,
+  //   },
+  //   {
+  //     id: 9,
+  //   },
+  // ];
   return (
     <>
-      <Box id="skills" mt={"600px"}>
+      <Box id="skills" >
         <Heading
           as={"h2"}
           fontFamily={"cursive"}
@@ -54,13 +56,13 @@ const Skills = () => {
               <>
                 <Stack gap={3} alignItems={"center"}>
                   <Image
-                    src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+                    src={e.logo}
                     w={"52"}
                     h={"52"}
                     borderRadius={"full"}
                   />
                   <Text color={"whiteAlpha.900"} fontSize={"1.3rem"}>
-                    React.js
+                    {e.name}
                   </Text>
                 </Stack>
               </>

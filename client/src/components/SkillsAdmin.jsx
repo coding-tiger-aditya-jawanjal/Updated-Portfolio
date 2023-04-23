@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Center,
@@ -19,20 +19,22 @@ import {
 import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { addSkill, deleteTheSkill, updateTheSkill } from "../service/api";
-import { useSelector } from "react-redux";
+import { profile } from "../App";
 
 const SkillsAdmin = () => {
+  const skillset = useContext(profile).data.skills;
+
   const [logo, setLogo] = useState();
   const [name, setName] = useState();
   const [skills, setSkills] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [id, setId] = useState();
 
-  const res = useSelector((state) => state.profile.data[0].skills);
-
   useEffect(() => {
-    setSkills(res);
-  }, [res]);
+    // setSkills("");
+    console.log(skillset);
+    setSkills(skillset);
+  }, [skillset]);
 
   const addNewSkill = async () => {
     const data = new FormData();

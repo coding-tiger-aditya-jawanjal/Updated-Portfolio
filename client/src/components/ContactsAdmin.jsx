@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Center,
@@ -20,8 +20,11 @@ import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { addContact, deleteTheContact, updateTheContact } from "../service/api";
+import { profile } from "../App";
 
 const ContactsAdmin = () => {
+  const contactHook = useContext(profile).data.contacts;
+
   const [contactApp, setContactApp] = useState();
   const [contactHref, setContactHref] = useState();
   const [contactPic, setContactPic] = useState();
@@ -29,10 +32,10 @@ const ContactsAdmin = () => {
   const [id , setId] = useState();
   const [toggle , setToggle] = useState(false);
 
-  const res = useSelector((state)=>state.profile.data[0].contacts);
+  // const res = useSelector((state)=>state.profile.data[0].contacts);
   useEffect(()=>{
-    setContacts(res);
-  },[res])
+    setContacts(contactHook);
+  },[contactHook])
 
   const addNewContact = async () => {
     const data = new FormData();
