@@ -6,9 +6,9 @@ import { ChakraProvider } from "@chakra-ui/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ChakraProvider >
+    <ChakraProvider>
       <App />
-    </ChakraProvider> 
+    </ChakraProvider>
   </React.StrictMode>
 );
 export const url = `http://localhost:5000`;

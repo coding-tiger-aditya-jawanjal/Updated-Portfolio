@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Center,
@@ -7,6 +7,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -18,33 +19,43 @@ import {
 } from "@chakra-ui/react";
 import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
-import { addSkill, deleteTheSkill, updateTheSkill } from "../service/api";
-import { profile } from "../App";
+import {
+  addSkill,
+  deleteTheSkill,
+  getAllData,
+  updateTheSkill,
+} from "../service/api";
 
 const SkillsAdmin = () => {
-  const skillset = useContext(profile).data.skills;
-
   const [logo, setLogo] = useState();
   const [name, setName] = useState();
-  const [skills, setSkills] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [id, setId] = useState();
+  const [allSkills, setAllSkills] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchApi = async () => {
+    const data = await getAllData();
+    const info = data[0].skills;
+    setAllSkills(info);
+  };
 
   useEffect(() => {
-    // setSkills("");
-    console.log(skillset);
-    setSkills(skillset);
-  }, [skillset]);
+    fetchApi();
+  }, []);
 
   const addNewSkill = async () => {
+    setLoading(true);
     const data = new FormData();
     data.append("file", logo);
     data.append("name", name);
-    const result = await addSkill(data);
-    console.log(result);
+    await addSkill(data);
+    fetchApi();
+    setLoading(false);
   };
 
   const updateSkill = async () => {
+    setLoading(true);
     const data = new FormData();
     data.append("file", logo);
     data.append("name", name);
@@ -52,8 +63,9 @@ const SkillsAdmin = () => {
       data,
       id,
     };
-    console.log(all);
     await updateTheSkill(all);
+    fetchApi();
+    setLoading(false);
   };
 
   const editSkill = (e) => {
@@ -61,10 +73,17 @@ const SkillsAdmin = () => {
     setToggle(true);
     setId(e._id);
   };
-  
+
   const deleteSkill = async (sId) => {
+    setLoading(true);
     await deleteTheSkill(sId);
+    await fetchApi();
+    setLoading(false);
   };
+
+  if (loading) {
+    return <Spinner size={"xl"} mt={"18vh"} />;
+  }
 
   return (
     <>
@@ -134,9 +153,9 @@ const SkillsAdmin = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {skills.map((e, i) => {
+            {allSkills.map((e, i) => {
               return (
-                <Tr key={e._id}>
+                <Tr key={e.id}>
                   <Td>{i + 1}</Td>
                   <Td>{e.name}</Td>
                   <Td>{e.logo}</Td>

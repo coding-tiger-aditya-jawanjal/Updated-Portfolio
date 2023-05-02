@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Center,
@@ -7,32 +7,44 @@ import {
   FormLabel,
   Heading,
   Input,
+  Spinner,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { updateAboutInfo } from "../service/api";
-import { profile } from "../App";
+import { getAllData, updateAboutInfo } from "../service/api";
 
 const AboutAdmin = () => {
-  const about = useContext(profile);
-  
   const [title, setTitle] = useState();
   const [aboutDescription, setAboutDriscription] = useState();
   const [resume, setResume] = useState();
-  
-  useEffect(()=>{
-    setTitle(about.data.about.title);
-    setAboutDriscription(about.data.about.description);
-  },[about])
+  const [loading, setLoading] = useState(false);
 
-  const updateAbout = async() =>{
+  const fetchApi = async () => {
+    setLoading(true);
+    const data = await getAllData();
+    setLoading(false);
+    const info = data[0].about;
+    setTitle(info.title);
+    setAboutDriscription(info.description);
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
+
+  const updateAbout = async () => {
+    setLoading(true);
     const data = new FormData();
-    data.append("title",title)
-    data.append("description",aboutDescription)
-    data.append("file",resume);
+    data.append("title", title);
+    data.append("description", aboutDescription);
+    data.append("file", resume);
     await updateAboutInfo(data);
+    fetchApi();
+    setLoading(false);
+  };
+  if (loading) {
+    return <Spinner size={"xl"} mt={"18vh"} />;
   }
-
   return (
     <>
       <Center>

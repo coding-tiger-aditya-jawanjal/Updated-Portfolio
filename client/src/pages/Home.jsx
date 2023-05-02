@@ -1,51 +1,47 @@
 import React from "react";
-import { Center, Stack } from "@chakra-ui/react";
-import About from "./About";
-import Contact from "./Contact";
+import { Heading, Stack } from "@chakra-ui/react";
 import Skills from "./Skills";
-
+import Contact from "./Contact";
 
 const Home = () => {
-  
   return (
     <>
-      <Center
+      <Stack
         bgImage={
-          "url('https://media.istockphoto.com/id/944880340/photo/chaotic-black-low-poly-surface-abstract-3d-render.jpg?b=1&s=170667a&w=0&k=20&c=_zTTb5QQqP9yjC1WYh1pzolYb70MEE11rVm23rxBDgo=')"
+          "url('/background-pic.jpg')"
         }
         w={"full"}
-        minH={"100vh"}
+        h={"85vh"}
         bgRepeat={"no-repeat"}
-        position={"relative"}
-        top={"-9px"}
         bgSize={"cover"}
-        zIndex={"-1"}
+        justifyContent={"center"}
+        placeItems={"end"}
       >
-        
-        
-        <Center
-          p={"10"}
-          m={"2"}
+        <Heading
           color={"whiteAlpha.900"}
-          fontSize={{ base: "5xl", md: "7xl" }}
-          fontStyle={"italic"}
-          textDecor={"underline"}
-          position={"absolute"}
-          left={{ base: "15vw", md: "50vw" }}
-          top={"20vh"}
-          h={"auto"}
-          mb={"20"}
+          p={{ base: "4", md: "16" }}
+          fontSize={{ base: "3.5rem", sm: "5rem" }}
+          fontStyle={"oblique"}
+          fontFamily={"heading"}
         >
-          Aditya Jawanjal 
-          
-        </Center>
-       
-        <Stack mb={"300px"} mt={"600px"} gap={"100px"}>
-          <About />
-          <Skills />
-          <Contact />
-        </Stack>
-      </Center>
+          Aditya Jawanjal
+        </Heading>
+      </Stack>
+
+      <Stack
+        pt={"24"}
+        gap={28}
+        pb={"20"}
+        bgImage={
+          "url('/background-pic.jpg')"
+        }
+        w={"full"}
+        bgRepeat={"no-repeat"}
+        bgSize={"cover"}
+      >
+        <Skills />
+        <Contact />
+      </Stack>
     </>
   );
 };

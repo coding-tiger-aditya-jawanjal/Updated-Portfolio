@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Center,
@@ -15,38 +15,49 @@ import {
   Th,
   Thead,
   Tr,
+  Spinner,
 } from "@chakra-ui/react";
 import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { addContact, deleteTheContact, updateTheContact } from "../service/api";
-import { profile } from "../App";
+import {
+  addContact,
+  deleteTheContact,
+  getAllData,
+  updateTheContact,
+} from "../service/api";
 
 const ContactsAdmin = () => {
-  const contactHook = useContext(profile).data.contacts;
-
   const [contactApp, setContactApp] = useState();
   const [contactHref, setContactHref] = useState();
   const [contactPic, setContactPic] = useState();
-  const [contacts , setContacts] = useState([]);
-  const [id , setId] = useState();
-  const [toggle , setToggle] = useState(false);
+  const [id, setId] = useState();
+  const [toggle, setToggle] = useState(false);
+  const [allContacts, setAllContacts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // const res = useSelector((state)=>state.profile.data[0].contacts);
-  useEffect(()=>{
-    setContacts(contactHook);
-  },[contactHook])
+  const fetchApi = async () => {
+    const data = await getAllData();
+    const info = data[0].contacts;
+    setAllContacts(info);
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
 
   const addNewContact = async () => {
+    setLoading(true);
     const data = new FormData();
     data.append("file", contactPic);
     data.append("title", contactApp);
     data.append("href", contactHref);
-    const result = await addContact(data);
-    console.log(result);
+    await addContact(data);
+    await fetchApi();
+    setLoading(false);
   };
 
   const updateContact = async () => {
+    setLoading(true);
     const data = new FormData();
     data.append("file", contactPic);
     data.append("title", contactApp);
@@ -55,8 +66,10 @@ const ContactsAdmin = () => {
       data,
       id,
     };
-    console.log(all);
+
     await updateTheContact(all);
+    await fetchApi();
+    setLoading(false);
   };
 
   const editContact = (e) => {
@@ -68,9 +81,15 @@ const ContactsAdmin = () => {
   };
 
   const deleteContact = async (cId) => {
+    setLoading(true);
     await deleteTheContact(cId);
+    await fetchApi();
+    setLoading(false);
   };
 
+  if (loading) {
+    return <Spinner size={"xl"} mt={"18vh"} />;
+  }
   return (
     <>
       <Center>
@@ -112,28 +131,27 @@ const ContactsAdmin = () => {
                 onChange={(e) => setContactPic(e.target.files[0])}
               />
             </FormControl>
-            {
-              toggle ?
+            {toggle ? (
               <Button
-              w={"full"}
-              bgColor={"whatsapp.100"}
-              type={"submit"}
-              fontSize={"larger"}
-              onClick={()=>updateContact()}
-            >
-              Update
-            </Button>
-            :
-            <Button
-              w={"full"}
-              bgColor={"whatsapp.100"}
-              type={"submit"}
-              fontSize={"larger"}
-              onClick={()=>addNewContact()}
-            >
-              Add
-            </Button>
-            }
+                w={"full"}
+                bgColor={"whatsapp.100"}
+                type={"submit"}
+                fontSize={"larger"}
+                onClick={() => updateContact()}
+              >
+                Update
+              </Button>
+            ) : (
+              <Button
+                w={"full"}
+                bgColor={"whatsapp.100"}
+                type={"submit"}
+                fontSize={"larger"}
+                onClick={() => addNewContact()}
+              >
+                Add
+              </Button>
+            )}
           </VStack>
         </Container>
       </Center>
@@ -150,31 +168,29 @@ const ContactsAdmin = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {
-              contacts.map((e,i)=>{
-                return(
-                  <Tr key={e._id}>
-              <Td>{i+1}</Td>
-              <Td>{e.title}</Td>
-              <Td>{e.href}</Td>
-              <Td>{e.logo}</Td>
-              <Td>
-              <Button size={"xs"}>
+            {allContacts.map((e, i) => {
+              return (
+                <Tr key={e.id}>
+                  <Td>{i + 1}</Td>
+                  <Td>{e.title}</Td>
+                  <Td>{e.href}</Td>
+                  <Td>{e.logo}</Td>
+                  <Td>
+                    <Button size={"xs"}>
                       <TbEdit size={"24"} onClick={() => editContact(e)} />{" "}
                     </Button>
-              </Td>
-              <Td>
-              <Button size={"xs"}>
+                  </Td>
+                  <Td>
+                    <Button size={"xs"}>
                       <MdDelete
                         size={"24"}
                         onClick={() => deleteContact(e._id)}
                       />
                     </Button>
-              </Td>
-            </Tr>
-                )
-              })
-            }
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
       </TableContainer>

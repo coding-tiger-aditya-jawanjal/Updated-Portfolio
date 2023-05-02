@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,42 +8,24 @@ import {
   Image,
   Stack,
 } from "@chakra-ui/react";
-import { profile } from "../App";
+import { getAllData } from "../service/api";
 
 const Contact = () => {
-  const List = useContext(profile).data.contacts;
-  // const List = [
-  //   {
-  //     id: 1,
-  //   },
-  //   {
-  //     id: 2,
-  //   },
-  //   {
-  //     id: 3,
-  //   },
-  //   {
-  //     id: 4,
-  //   },
-  //   {
-  //     id: 5,
-  //   },
-  //   {
-  //     id: 6,
-  //   },
-  //   {
-  //     id: 7,
-  //   },
-  //   {
-  //     id: 8,
-  //   },
-  //   {
-  //     id: 9,
-  //   },
-  // ];
+  const [allContacts, setAllContacts] = useState([]);
+
+  const fetchApi = async () => {
+    const data = await getAllData();
+    const info = data[0].contacts;
+    setAllContacts(info);
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
+
   return (
     <>
-      <Box id="contact" pt={"300px"} mb={"100px"}>
+      <Box id="contact">
         <Center>
           <Heading as={"h2"} fontFamily={"cursive"} mb={"14"} color={"bisque"}>
             Contact Me
@@ -53,28 +35,38 @@ const Contact = () => {
           wrap={"wrap"}
           gap={10}
           justifyContent={{ base: "center", md: "flex-start" }}
-          pl={{md:"10" ,lg:"14"}}
+          pl={{ md: "10", lg: "14" }}
         >
-          {List.map((e) => {
+          {allContacts.map((e) => {
             return (
               <>
                 <Stack
                   key={e.id}
-                  p={"14"}
+                  p={"10"}
                   gap={2}
                   bgColor={"honeydew"}
                   borderRadius={"50px"}
                   alignItems={"center"}
+                  w={"72"}
+                  h={"72"}
                 >
-                  <Heading color={"linkedin.400"}>Email</Heading>
-                  <Image
-                    src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gmail.max-1100x1100.png"
-                    w={"20"}
-                    h={"20"}
-                  />
-                  <Button type={"button"} size={"lg"} bgColor={"whatsapp.100"}>
-                    Send Email
-                  </Button>
+                  <Heading
+                    color={"linkedin.400"}
+                    noOfLines={1}
+                    fontSize={"1.5rem"}
+                  >
+                    {e.title}
+                  </Heading>
+                  <Image src={e.logo} w={"32"} h={"20"} borderRadius={"2xl"} />
+                  <a href={e.href}>
+                    <Button
+                      type={"button"}
+                      size={"lg"}
+                      bgColor={"whatsapp.100"}
+                    >
+                      Message
+                    </Button>
+                  </a>
                 </Stack>
               </>
             );

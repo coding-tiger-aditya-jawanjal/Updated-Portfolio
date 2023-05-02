@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Center,
@@ -15,38 +15,51 @@ import {
   Th,
   Thead,
   Tr,
+  Spinner,
 } from "@chakra-ui/react";
 import { TbEdit } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { addProject, deleteTheProject, updateTheProject } from "../service/api";
-import { profile } from "../App";
+import {
+  addProject,
+  deleteTheProject,
+  getAllData,
+  updateTheProject,
+} from "../service/api";
 
 const ProjectsAdmin = () => {
-  const ProjectHook = useContext(profile).data.projects;
   const [projectName, setProjectName] = useState();
   const [githubHref, setGithubHref] = useState();
   const [projectLink, setProjectLink] = useState();
   const [projectPic, setProjectPic] = useState();
-  const [projects, setProjects] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [id, setId] = useState();
+  const [allProjects, setAllProjects] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchApi = async () => {
+    const data = await getAllData();
+    const info = data[0].projects;
+    setAllProjects(info);
+  };
 
   useEffect(() => {
-    setProjects(ProjectHook);
-  }, [ProjectHook]);
+    fetchApi();
+  }, []);
 
   const addNewProject = async () => {
+    setLoading(true);
     const data = new FormData();
     data.append("file", projectPic);
     data.append("name", projectName);
     data.append("github", githubHref);
     data.append("link", projectLink);
-    const result = await addProject(data);
-    console.log(result);
+    await addProject(data);
+    fetchApi();
+    setLoading(false);
   };
 
   const updateProject = async () => {
+    setLoading(true);
     const data = new FormData();
     data.append("file", projectPic);
     data.append("name", projectName);
@@ -56,22 +69,30 @@ const ProjectsAdmin = () => {
       data,
       id,
     };
-    console.log(all);
     await updateTheProject(all);
+    await fetchApi();
+    setLoading(false);
   };
 
   const editProject = (e) => {
     setProjectName(e.name);
     setGithubHref(e.github);
     setProjectLink(e.link);
-    setProjectPic(e.image)
+    setProjectPic(e.image);
     setToggle(true);
     setId(e._id);
   };
 
   const deleteProject = async (pId) => {
+    setLoading(true);
     await deleteTheProject(pId);
+    fetchApi();
+    setLoading(false);
   };
+
+  if (loading) {
+    return <Spinner size={"xl"} mt={"18vh"} />;
+  }
 
   return (
     <>
@@ -161,9 +182,9 @@ const ProjectsAdmin = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {projects.map((e, i) => {
+            {allProjects.map((e, i) => {
               return (
-                <Tr key={e._id}>
+                <Tr key={e.id}>
                   <Td>{i + 1}</Td>
                   <Td>{e.name}</Td>
                   <Td>{e.github}</Td>

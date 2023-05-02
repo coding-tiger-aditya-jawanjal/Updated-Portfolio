@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,40 +8,24 @@ import {
   Image,
   VStack,
 } from "@chakra-ui/react";
+import { getAllData } from "../service/api";
 
 const Projects = () => {
-  const list = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-  ];
+  const [allProjects, setAllProjects] = useState([]);
+
+  const fetchApi = async () => {
+    const data = await getAllData();
+    const info = data[0].projects;
+    setAllProjects(info);
+    console.log(info);
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
   return (
     <>
       <Box zIndex={1}>
-        <HStack w={"full"} h={"16"} mb={"30"} gap={7} shadow={"dark-lg"}>
-          <Center
-            w={"full"}
-            fontSize={{ sm: "2xl", md: "3xl" }}
-            fontWeight={"bold"}
-            fontFamily={"cursive"}
-          >
-            <Box mr={"8"}>Full Stack</Box>
-            <Box mr={"8"}>Frontend</Box>
-            <Box mr={"8"}>Backend</Box>
-          </Center>
-        </HStack>
         <Center w={"full"} pt={"10"}>
           <HStack
             gap={8}
@@ -52,7 +36,7 @@ const Projects = () => {
             ml={"3"}
             mr={"3"}
           >
-            {list.map((e) => {
+            {allProjects.map((e) => {
               return (
                 <>
                   <Box>
@@ -63,19 +47,22 @@ const Projects = () => {
                       pb={"8"}
                       pt={"5"}
                     >
-                      <Heading>Shopping Cart</Heading>
+                      <Heading>{e.name}</Heading>
                       <Image
-                        src="https://i.insider.com/5dd6bcfafd9db25c9e3d864b?width=1000&format=jpeg&auto=webp"
+                        src={e.image}
                         alt="window"
                         W={{ md: "96", lg: "full" }}
                         h={"72"}
                       />
-                      <HStack w={"full"} gap={5} justifyContent={"space-evenly"}>
+                      <HStack
+                        w={"full"}
+                        gap={5}
+                        justifyContent={"space-evenly"}
+                      >
                         <a
-                          href="http://google.com"
+                          href={e.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                        
                         >
                           <Button
                             type={"button"}
@@ -87,10 +74,9 @@ const Projects = () => {
                           </Button>
                         </a>
                         <a
-                          href="http://google.com"
+                          href={e.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          
                         >
                           <Button
                             type={"button"}

@@ -23,10 +23,10 @@ const Navbar = () => {
 
   const auth = localStorage.getItem("admin");
 
-  const logout = () =>{
+  const logout = () => {
     localStorage.clear();
     window.location.reload();
-  }
+  };
 
   return (
     <>
@@ -35,14 +35,13 @@ const Navbar = () => {
         h={"32"}
         w={"full"}
         p={"5"}
-        
         top={"0"}
         zIndex={2}
         pos={"sticky"}
       >
         <HStack maxW={"container.xl"}>
           <Image
-            src="https://media.istockphoto.com/id/1331995491/vector/aj-logo-design-initial-aj-letter-logo-design-vector-template.jpg?s=170667a&w=0&k=20&c=HI6lKRmj2rmNsIdb10FB4X8_rRJFV_9Zyvlu9giXwq8="
+            src="/logo.jpg"
             w={"24"}
             h={"24"}
             borderRadius={"full"}
@@ -56,7 +55,7 @@ const Navbar = () => {
           >
             <HStack display={{ base: "none", lg: "flex" }} gap={5}>
               <Link to={"/"}>Home</Link>
-              <NavHashLink to={"/#about"} smooth={true}>
+              <NavHashLink to={"/about"} smooth={true}>
                 About
               </NavHashLink>
               <NavHashLink to={"/#skills"} smooth={true}>
@@ -66,23 +65,20 @@ const Navbar = () => {
                 Contact
               </HashLink>
               <Link to={"/projects"}>Projects</Link>
-              
-              {
-                auth ? 
+
+              {auth ? (
                 <>
                   <Link onClick={logout}>Logout</Link>
                   <Link to={"/control"}>Control</Link>
                 </>
-                :
-                <>
-
-                </>
-              }
-                <Avatar
-                  size={"lg"}
-                  name="Aditya Jawanjal"
-                  src="https://static-cse.canva.com/blob/975732/1600w-EW4cggXkgbc.jpg"
-                />
+              ) : (
+                <></>
+              )}
+              <Avatar
+                size={"lg"}
+                name="Aditya Jawanjal"
+                src="/profile-pic.png"
+              />
             </HStack>
             <Box display={{ base: "flex", lg: "none" }}>
               <GiHamburgerMenu size={42} onClick={onOpen} />
@@ -95,43 +91,25 @@ const Navbar = () => {
         onClose={onClose}
         isOpen={isOpen}
         fontSize={"larger"}
-        
       >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader mb={"5"}>Visit more pages</DrawerHeader>
           <DrawerBody>
             <Stack gap={5} ml={"5"} onClick={onClose}>
-              <Link to={"/"} >
-                Home
-              </Link>
-              <HashLink to={"/#about"}>
-                About
-              </HashLink>
-              <HashLink to={"/#skills"} >
-                Skills
-              </HashLink>
-              <HashLink to={"/#contact"} >
-                Contact
-              </HashLink>
-              <Link to={"/projects"} >
-                Projects
-              </Link>
-              {
-                auth ? 
+              <Link to={"/"}>Home</Link>
+              <HashLink to={"/about"}>About</HashLink>
+              <HashLink to={"/#skills"}>Skills</HashLink>
+              <HashLink to={"/#contact"}>Contact</HashLink>
+              <Link to={"/projects"}>Projects</Link>
+              {auth ? (
                 <>
-                <Link onClick={logout} >
-                Logout
-              </Link>
-              <Link to={"/control"} >
-                Control Panel
-              </Link>
-                </> 
-                :
-                <>
-
+                  <Link onClick={logout}>Logout</Link>
+                  <Link to={"/control"}>Control Panel</Link>
                 </>
-              }
+              ) : (
+                <></>
+              )}
             </Stack>
           </DrawerBody>
           <DrawerFooter>Created By : Aditya Jawanjal</DrawerFooter>

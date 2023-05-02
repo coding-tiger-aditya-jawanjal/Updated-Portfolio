@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Heading,
   Tabs,
@@ -11,13 +11,8 @@ import AboutAdmin from "../components/AboutAdmin";
 import SkillsAdmin from "../components/SkillsAdmin";
 import ContactsAdmin from "../components/ContactsAdmin";
 import ProjectsAdmin from "../components/ProjectsAdmin";
-import { useSelector } from "react-redux";
 
 const AdminPanel = () => {
-  // const data = useSelector((state)=>state.profile.data[0].about)
-  useEffect(()=>{
-    // console.log(data);
-  },[])
   return (
     <>
       <Heading textAlign={"center"} as={"h2"} pb={"10"}>

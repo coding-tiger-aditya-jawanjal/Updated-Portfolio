@@ -5,7 +5,6 @@ exports.removeSkills = async (req, res) => {
   try {
     const data = await Profile.findById(req.user.id);
     if (data) {
-      await cloudinary.uploader.destroy()
       await Profile.findByIdAndUpdate(req.user.id, {
         $pull: {
           skills: { _id: req.params.id },

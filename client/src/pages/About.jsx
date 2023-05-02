@@ -1,156 +1,127 @@
 import {
-  Box,
   Button,
-  Center,
+  Container,
   HStack,
   Heading,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Stack,
   Text,
-  VStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
-import { profile } from "../App";
-
+import React, { useEffect, useState } from "react";
+import { getAllData } from "../service/api";
 
 const About = () => {
-  const info = useContext(profile).data.about;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [resume, setResume] = useState();
+
+  const fetchApi = async () => {
+    const data = await getAllData();
+    const info = data[0].about;
+    setTitle(info.title);
+    setDescription(info.description);
+    setResume(info.resume);
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
 
   return (
     <>
-      <Center>
-        <Box id="about" >
-          <Center>
-            <Heading
-              as={"h2"}
-              fontFamily={"cursive"}
-              mb={"14"}
-              color={"bisque"}
+      <Stack gap={5} alignItems={"center"} mb={"16"}>
+        <Heading
+          as={"h2"}
+          fontFamily={"cursive"}
+          fontWeight={"bold"}
+          fontSize={"2.5rem"}
+          color={"red.400"}
+          pt={"8"}
+        >
+          About Me
+        </Heading>
+        <Container
+          maxW={{ base: "container.sm", md: "container.lg" }}
+          border={"2px solid blue"}
+          bgColor={"honeydew"}
+          p={{ base: "6", md: "14" }}
+          borderTopRightRadius={{ base: "none", md: "full" }}
+          borderBottomRightRadius={{ base: "none", md: "full" }}
+        >
+          <Stack gap={3} pr={{ base: "8", md: "16" }}>
+            <Text
+              fontSize={"2rem"}
+              fontWeight={"bold"}
+              fontStyle={"oblique"}
+              noOfLines={1}
             >
-              About Me
-            </Heading>
-          </Center>
-          <VStack
-            bgColor={"whiteAlpha.900"}
-            maxW={{
-              base: "full",
-              sm: "container.sm",
-              md: "container.md",
-              lg: "container.lg",
-            }}
-            zIndex={"1"}
-            p={{ base: "8", xl: "16" }}
-            borderRightRadius={{ md: "full" }}
-            gap={5}
-          >
-            <Center fontSize={"3xl"} mb={"5"} noOfLines={1}>
-              {info.title}
-            </Center>
-            <Center textAlign={"justify"} noOfLines={4}>
-              {info.description}
-            </Center>
-          
-            {/* <Stack
-              justifyContent={"space-between"}
-              ml={"3"}
-              mr={"3"}
-              w={"full"}
+              {title}
+            </Text>
+            <Text
+              textAlign={"justify"}
+              fontSize={"1.1rem"}
+              noOfLines={6}
+              wordBreak={"break-word"}
             >
-              <Button>Click Me</Button> */}
-              {/* <Button
-                size={"lg"}
-                bgColor={"red.300"}
-                fontSize={"1.2rem"}
-                fontFamily={"mono"}
-                zIndex={5}
-               
-              >
-                Download Resume
-              </Button> */}
-              {/* <Button
-                type="button"
+              {description}
+            </Text>
+            <HStack justifyContent={"space-between"}>
+              <a href={resume} target="_blank" rel="noopener noreferrer">
+                <Button size={"lg"} bgColor={"linkedin.100"}>
+                  My Resume
+                </Button>
+              </a>
+              <Text
                 as={"button"}
-                bgColor={"inherit"}
+                textColor={"red.700"}
+                pb={"2"}
+                borderBottom={"2px solid blue"}
                 fontSize={"1.2rem"}
-                borderBottom={"1px solid blue"}
-                pb={"1"}
                 onClick={onOpen}
-                
               >
                 Read More...
-              </Button> */}
-             
-              
-                
-              
-            {/* </Stack> */}
-           
-          </VStack>
-        </Box>
-        
-        
-        </Center>
-        {/* <Modal
-                blockScrollOnMount={false}
-                isOpen={isOpen}
-                onClose={onClose}
-                size={{ base:"xs",sm:"sm", md:"3xl", xl:"6xl"}}
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Modal Title</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Text fontWeight="bold" mb="1rem">
-                      You can scroll the content behind the modal
-                    </Text>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Nam quasi esse ipsum nulla vitae cupiditate blanditiis.
-                      Architecto id voluptas asperiores, odit soluta amet
-                      repellat obcaecati nisi aut eligendi adipisci! Eaque nisi
-                      dicta unde doloremque non doloribus totam maiores
-                      obcaecati quidem.
-                    </Text>
-                  </ModalBody>
-
-                  <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={onClose}>
-                      Close
-                    </Button>
-                    <Button variant="ghost">Secondary Action</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal> */}
-     
-      {/* Modal of Read More */}
-      {/* <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+              </Text>
+            </HStack>
+          </Stack>
+        </Container>
+      </Stack>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{
+          base: "sm",
+          sm: "xl",
+          md: "3xl",
+          lg: "4xl",
+          xl: "6xl",
+          "2xl": "6xl",
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <Text fontWeight='bold' mb='1rem'>
-              You can scroll the content behind the modal
-            </Text>
-            <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam quasi esse ipsum nulla vitae cupiditate blanditiis. Architecto id voluptas asperiores, odit soluta amet repellat obcaecati nisi aut eligendi adipisci! Eaque nisi dicta unde doloremque non doloribus totam maiores obcaecati quidem.</Text>
-          </ModalBody>
-
+          <ModalBody>{description}</ModalBody>
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            <a href="http://" target="_blank" rel="noopener noreferrer">
+              <Button variant="ghost" bgColor={"red.300"}>
+                My Resume
+              </Button>
+            </a>
           </ModalFooter>
         </ModalContent>
-      </Modal> */}
+      </Modal>
     </>
   );
 };
